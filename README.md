@@ -12,12 +12,12 @@ Salsa20/12 là thuật toán mã hóa dòng (*Stream Cipher*) sử dụng 12 vò
 
 | Thành viên | Module phụ trách |
 |---|---|
-| Thành viên 1 | Quarter Round và `rotl32()` |
-| Thành viên 2 | Row Round |
-| Thành viên 3 | Column Round |
-| Thành viên 4 | Double Round và Salsa20 Core |
-| Thành viên 5 | Khởi tạo State |
-| Thành viên 6 | Mã hóa và giải mã |
+| Nguyễn Trung Hiếu | Quarter Round và `rotl32()` |
+| Nguyễn Đức Minh | Row Round |
+| Trần Trọng Bảo | Column Round |
+| Trần Đức Đạt | Double Round và Salsa20 Core |
+| Trịnh Huỳnh Đức | Khởi tạo State |
+| Phạm Quang Huy | Mã hóa và giải mã |
 
 Mỗi thành viên tự nghiên cứu, lập trình, kiểm thử và chịu trách nhiệm về module được phân công.
 
