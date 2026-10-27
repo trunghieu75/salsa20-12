@@ -4,8 +4,6 @@
 #include <assert.h>
 #include "salsa20.h"
 
-/* Đổi thành 1 khi đã điền vector Nettle ở Test 5 */
-#define HAVE_NETTLE_VECTOR 0
 
 int main(void) {
     printf("=== Salsa20/12 CORE TESTS ===\n\n");
@@ -75,24 +73,34 @@ int main(void) {
         printf("PASS Test4: deterministic\n");
     }
 
-    /* --- Test 5: Nettle vector 12 vòng (điền khi có) --- */
-#if HAVE_NETTLE_VECTOR
+    
+    /* Test 5: so sanh Core voi vector tham chieu Salsa20/12 */
     {
-        /* TODO: điền từ Nettle test_salsa20r12 */
-        uint8_t key[32]   = { 0x00 };
-        uint8_t nonce[8]  = { 0x00 };
-        uint8_t exp[64]   = { 0x00 };
+        const uint8_t key[32] = {0};
+        const uint8_t nonce[8] = {0};
 
-        uint32_t s[16];
-        uint8_t act[64];
-        salsa20_init_state(s, key, nonce, 0);
-        salsa20_12_block(s, act);
-        assert(memcmp(act, exp, 64) == 0);
-        printf("PASS Test5: Nettle 12-round\n");
+        const uint8_t expected[64] = {
+            0xBD, 0x78, 0xA2, 0xF8, 0x11, 0x8A, 0x56, 0x3C,
+            0x76, 0x1D, 0xB4, 0xF2, 0xFB, 0xE0, 0x55, 0xDA,
+            0x97, 0xF9, 0x09, 0x88, 0xD2, 0x75, 0x94, 0xD9,
+            0xC5, 0xDF, 0xD1, 0x3A, 0x3E, 0xFE, 0xAA, 0x3F,
+            0x68, 0xF0, 0xD2, 0x56, 0x48, 0x50, 0xAD, 0xF5,
+            0x01, 0x74, 0x33, 0x96, 0x8E, 0x4B, 0x34, 0x05,
+            0xAC, 0x49, 0xA3, 0x95, 0x32, 0x12, 0x4F, 0xCD,
+            0x6F, 0x47, 0xE4, 0x15, 0xC7, 0x02, 0x8A, 0x83
+        };
+
+        uint32_t state[16];
+        uint8_t actual[64];
+
+        salsa20_init_state(state, key, nonce, 0);
+        salsa20_12_block(state, actual);
+
+        assert(memcmp(actual, expected, 64) == 0);
+
+        printf("PASS Test5: reference keystream\n");
     }
-#else
-    printf("SKIP Test5: chưa điền vector Nettle\n");
-#endif
+
 
     printf("\n=== ALL PASS ===\n");
     return 0;
